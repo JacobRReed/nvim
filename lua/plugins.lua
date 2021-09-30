@@ -53,14 +53,16 @@ return require('packer').startup({function()
   -- https://github.com/ryanoasis/vim-devicons
   use {'ryanoasis/vim-devicons'}
 
-  -- Lualine status bar and webdev icons
-  -- https://github.com/hoob3rt/lualine.nvim
+
+  -- Statusline
+  -- https://github.com/glepnir/galaxyline.nvim
   use {
-    'hoob3rt/lualine.nvim',
-    requires = {
-      'ryanoasis/vim-devicons',
-      opt = true
-    }
+    'glepnir/galaxyline.nvim',
+      branch = 'main',
+      -- your statusline
+      config = function() require'my_statusline' end,
+      -- some optional icons
+      requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
 
   -- Dashboard
@@ -97,7 +99,7 @@ return require('packer').startup({function()
   -- Buffer bar
   -- https://github.com/akinsho/bufferline.nvim
   use {
-    'akinsho/bufferline.nvim', 
+    'akinsho/bufferline.nvim',
     requires = 'kyazdani42/nvim-web-devicons'
   }
 end,
