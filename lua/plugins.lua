@@ -1,8 +1,8 @@
 local fn = vim.fn
 local install_path = fn.stdpath('data')..'/site/pack/packer/start/packer.nvim'
 if fn.empty(fn.glob(install_path)) > 0 then
-  fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
-  vim.cmd 'packadd packer.nvim'
+  ---@diagnostic disable-next-line: lowercase-global
+  packer_bootstrap = fn.system({'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path})
 end
 
 return require('packer').startup({function()
@@ -53,21 +53,20 @@ return require('packer').startup({function()
   -- https://github.com/ryanoasis/vim-devicons
   use {'ryanoasis/vim-devicons'}
 
-
   -- Statusline
   -- https://github.com/glepnir/galaxyline.nvim
   use {
-    'glepnir/galaxyline.nvim',
+      'glepnir/galaxyline.nvim',
       branch = 'main',
-      -- your statusline
-      config = function() require'my_statusline' end,
+      config = "require'plugins.galaxyline'",
+      event = 'BufWinEnter',
       -- some optional icons
       requires = {'kyazdani42/nvim-web-devicons', opt = true}
   }
 
   -- Dashboard
   -- https://github.com/glepnir/dashboard-nvim
-  use {'glepnir/dashboard-nvim'}
+  use {'glepnir/dashboard-nvim', config = "require'plugins.dashboard'", event = 'BufWinEnter'}
 
   -- Telescope
   -- https://github.com/nvim-telescope/telescope.nvim
@@ -102,6 +101,12 @@ return require('packer').startup({function()
     'akinsho/bufferline.nvim',
     requires = 'kyazdani42/nvim-web-devicons'
   }
+
+    -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
+  if packer_bootstrap then
+    require('packer').sync()
+  end
 end,
 config = {
   display = {

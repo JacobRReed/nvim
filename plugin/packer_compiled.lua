@@ -78,12 +78,20 @@ _G.packer_plugins = {
     path = "/Users/jreed/.local/share/nvim/site/pack/packer/start/completion-nvim"
   },
   ["dashboard-nvim"] = {
-    loaded = true,
-    path = "/Users/jreed/.local/share/nvim/site/pack/packer/start/dashboard-nvim"
+    config = { "require'plugins.dashboard'" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/jreed/.local/share/nvim/site/pack/packer/opt/dashboard-nvim"
   },
   dracula = {
     loaded = true,
     path = "/Users/jreed/.local/share/nvim/site/pack/packer/start/dracula"
+  },
+  ["galaxyline.nvim"] = {
+    config = { "require'plugins.galaxyline'" },
+    loaded = false,
+    needs_bufread = false,
+    path = "/Users/jreed/.local/share/nvim/site/pack/packer/opt/galaxyline.nvim"
   },
   ["gitsigns.nvim"] = {
     loaded = true,
@@ -96,10 +104,6 @@ _G.packer_plugins = {
   ["lazygit.nvim"] = {
     loaded = true,
     path = "/Users/jreed/.local/share/nvim/site/pack/packer/start/lazygit.nvim"
-  },
-  ["lualine.nvim"] = {
-    loaded = true,
-    path = "/Users/jreed/.local/share/nvim/site/pack/packer/start/lualine.nvim"
   },
   ["nvim-lspconfig"] = {
     loaded = true,
@@ -158,7 +162,7 @@ vim.cmd [[augroup packer_load_aucmds]]
 vim.cmd [[au!]]
   -- Event lazy-loads
 time([[Defining lazy-load event autocommands]], true)
-vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'which-key.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
+vim.cmd [[au BufWinEnter * ++once lua require("packer.load")({'dashboard-nvim', 'which-key.nvim', 'galaxyline.nvim'}, { event = "BufWinEnter *" }, _G.packer_plugins)]]
 time([[Defining lazy-load event autocommands]], false)
 vim.cmd("augroup END")
 if should_profile then save_profiles() end
